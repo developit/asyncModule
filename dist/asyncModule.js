@@ -3,7 +3,7 @@
 		define(factory);
 	}
 	else {
-		root.returnExports = factory();
+		root.asyncModule = factory();
 	}
 }(this, function() {
 	"use strict";
