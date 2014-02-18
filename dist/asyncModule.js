@@ -37,6 +37,7 @@
 	
 
 	return {
+		InlineWorker : InlineWorker,
 		create : function() {
 			var exports = {},
 				callbacks = {},
