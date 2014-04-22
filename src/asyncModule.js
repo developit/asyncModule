@@ -2,6 +2,7 @@ define(['InlineWorker'], function asyncModule(InlineWorker) {
 	"use strict";
 	
 	return {
+		InlineWorker : InlineWorker,
 		create : function() {
 			var exports = {},
 				callbacks = {},
@@ -32,8 +33,8 @@ define(['InlineWorker'], function asyncModule(InlineWorker) {
 				worker.addEventListener('message', recv);
 			};
 			apiMethod = function(name, args) {
-				var args = Array.prototype.slice.call(arguments, 1),
-					callback = noop;
+				var callback = noop;
+				args = Array.prototype.slice.call(arguments, 1);
 				if (typeof args[args.length-1]==='function') {
 					callback = args.pop();
 				}
@@ -88,7 +89,7 @@ define(['InlineWorker'], function asyncModule(InlineWorker) {
 				var len = e.data.length,
 					r, i;
 				open -= len;
-				for (var i=0; i<len; i++) {
+				for (i=0; i<len; i++) {
 					r = e.data[i];
 					callbacks[r.id].call(exports, r.result, r.error);
 					callbacks[r.id] = null;
@@ -104,12 +105,11 @@ define(['InlineWorker'], function asyncModule(InlineWorker) {
 					mq = [];
 				}
 			};
-			
+
 			if (arguments && arguments.length) {
 				exports.init.apply(exports, arguments);
 			}
 			return exports;
 		}
 	};
-	
-});
+}));
